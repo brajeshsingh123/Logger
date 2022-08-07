@@ -1,28 +1,41 @@
-#include "logger.h"
+#include <iostream>
 #include <mutex>
 #include <string>
+#include "logger.h"
 using namespace std;
 
-const string Filelogger::m_sFilelogger = "FileLog.txt";
+const string FileLogger::m_sFileLogger = "FileLog.txt";
 
-Filelogger::Filelogger()
+FileLogger::FileLogger()
 {
-	m_Logfile.open(m_sFilelogger, std::ios_base::app);
+	m_LogFile.open(m_sFileLogger, std::ios_base::app);
 }
 
-Filelogger* Filelogger::m_pInstance()
+FileLogger* FileLogger::m_pInstance()
 {
-	static Filelogger* loggerInst = new Filelogger();
+	static FileLogger* loggerInst = new FileLogger();
 	return loggerInst;
 }
 
-void Filelogger::Log(const std::string& log)
+void FileLogger::Log(const std::string& log)
 {
 	std::unique_lock<mutex> lock(m_Mutex);
-	m_Logfile << log << endl;
+	m_LogFile << log << endl;
 }
 
-Filelogger::~Filelogger()
+FileLogger::~FileLogger()
 {
-	m_Logfile.close();
+	m_LogFile.close();
+}
+
+ConsoleLogger* ConsoleLogger::m_pInstance()
+{
+	static ConsoleLogger* loggerInst = new ConsoleLogger();
+	return loggerInst;
+}
+
+void ConsoleLogger::Log(const std::string& log)
+{
+	std::unique_lock<mutex> lock(m_Mutex);
+	std::cout << log << endl;
 }

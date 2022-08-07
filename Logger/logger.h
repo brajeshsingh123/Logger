@@ -11,15 +11,24 @@ public:
 	virtual void Log(const std::string& log) = 0;
 };
 
-class Filelogger :public ThreadSafeLogger
+class FileLogger :public ThreadSafeLogger
 {
-	std::ofstream m_Logfile;
-	static const std::string m_sFilelogger;
-	Filelogger();
+	std::ofstream m_LogFile;
+	static const std::string m_sFileLogger;
+	FileLogger();
 public:
-	static Filelogger* m_pInstance();
+	static FileLogger* m_pInstance();
 	void Log(const std::string& log);
-	~Filelogger();
+	~FileLogger();
+};
+
+class ConsoleLogger : public ThreadSafeLogger
+{
+	ConsoleLogger() {}
+public:
+	static ConsoleLogger* m_pInstance();
+	void Log(const std::string& log);
+	~ConsoleLogger(){}
 };
 
 #endif //LOGGER_H
