@@ -11,7 +11,7 @@ public:
 	virtual void Log(const std::string& log) = 0;
 };
 
-class FileLogger :public ThreadSafeLogger
+class FileLogger : public ThreadSafeLogger
 {
 	std::ofstream m_LogFile;
 	static const std::string m_sFileLogger;
@@ -29,6 +29,18 @@ public:
 	static ConsoleLogger* m_pInstance();
 	void Log(const std::string& log);
 	~ConsoleLogger(){}
+};
+
+// DBLogger can be implemented here
+class DBLogger : public ThreadSafeLogger
+{
+
+};
+
+// HTTPLogger can be implemented here
+class HTTPLogger : public ThreadSafeLogger
+{
+
 };
 
 #endif //LOGGER_H
